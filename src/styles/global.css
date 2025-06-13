@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+
+          --color-primary-50: #f0f2f5;
+          --color-primary-100: #e1e5ea;
+          --color-primary-200: #c3ccd6;
+          --color-primary-300: #a5b2c1;
+          --color-primary-400: #7f91a7;
+          --color-primary-500: #5b708c;
+          --color-primary-600: #2a364e;
+          --color-primary-700: #232e43;
+          --color-primary-800: #1c2538;
+          --color-primary-900: #151c2c;
+
+          --color-secondary-50: #fff5f0;
+          --color-secondary-100: #ffeae0;
+          --color-secondary-200: #ffd0b6;
+          --color-secondary-300: #ffb38c;
+          --color-secondary-400: #fd8a4d;
+          --color-secondary-500: #f76123; /* Secondary color */
+          --color-secondary-600: #e84c13;
+          --color-secondary-700: #c13b10;
+          --color-secondary-800: #9b2f0e;
+          --color-secondary-900: #7c240c;
+
+          --font-sans: 'Inter', system-ui, sans-serif;
+          --font-heading: 'Montserrat', system-ui, sans-serif;
+
+
+} 
+
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.2;
+  }

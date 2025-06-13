@@ -1,0 +1,247 @@
+---
+import { AstroError } from 'astro/errors';
+import CourseCard from '../../components/CourseCard.astro';
+import { Check, BookOpenCheck, Clock, Calendar, LaptopMinimal, Send, Copy } from 'lucide-astro';
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from "../../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { EntryFieldTypes } from "contentful";
+
+
+export interface Objetives {
+  contentTypeId: "objectives";
+  fields: {
+    verb: EntryFieldTypes.Text;
+    contet: EntryFieldTypes.Text;
+  };
+}
+
+export interface Modulos {
+  contentTypeId: "modulos";
+  fields: {
+    Nmodulos: EntryFieldTypes.Text;
+    Dmodulos: EntryFieldTypes.Text;
+  };
+}
+
+export interface DetallesPrograma {
+  contentTypeId: "detallesPrograma";
+  fields: {
+    duracionP: EntryFieldTypes.Text;
+    horarioP: EntryFieldTypes.Text;
+    modalidadP: EntryFieldTypes.Text;
+    logoauspiciadorP: EntryFieldTypes.AssetLink;
+    edadP: EntryFieldTypes.Text;
+    logoP: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>;
+    emailS: EntryFieldTypes.Text;
+  };
+}
+
+export interface ProfesoresPrograma {
+  contentTypeId: "profesoresP";
+  fields: {
+    cvP: EntryFieldTypes.Text;
+    nombreP: EntryFieldTypes.Text;
+    perfilP: EntryFieldTypes.AssetLink;
+  };
+}
+
+export interface Programa {
+  contentTypeId: "programa";
+  fields: {
+    title: EntryFieldTypes.Text;
+    description: EntryFieldTypes.Text;
+    slug: EntryFieldTypes.Text;
+    cover: EntryFieldTypes.AssetLink;
+    objetives: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<Objetives>>;
+    modulos: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<Modulos>>;
+    detallesP: EntryFieldTypes.EntryLink<DetallesPrograma>;
+    profesores: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<ProfesoresPrograma>>;
+  };
+}
+
+
+
+const { slug } = Astro.params;
+
+const { items } = await contentfulClient.getEntries<Programa>({
+  content_type: "programa",
+  "fields.slug": slug,
+});
+
+if (!items.length) throw new AstroError("Programa no encontrado");
+
+const programa = items[0].fields;
+---
+
+<Layout title={programa.title}>
+
+
+
+ <section class="relative">
+    <div class="h-64 sm:h-100 md:h-110 lg:h-120 xl:h-140 overflow-hidden">
+      <img src={programa.cover.fields.file.url} alt={programa.cover.fields.title} class="w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/50"></div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 p-8">
+      <div class="container mx-auto">
+        <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">{programa.title}</h1>
+        <p class="text-md md:text-xl text-gray-200 max-w-3xl">{programa.description}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Program Details -->
+  <section class="py-12 bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-primary-600 dark:text-white mb-4">Objetivos del Programa</h2>
+           <!-- Objetivos del Programa -->
+            <ul class="space-y-3">
+                {programa.objetives.map(obj => (
+                 <li class="flex items-start">
+                   <Check class="size-5 text-secondary-500 mr-2" />
+
+                  <p class="text-gray-700 dark:text-gray-300">{obj.fields.contet}</p>
+                 </li>
+             ))}
+            </ul>
+
+          </div>
+
+          <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-primary-600 dark:text-white mb-8">Cursos del Programa</h2>
+            <div class="grid grid-cols-1 ">
+              {programa.modulos.map(course => (
+                <div class="flex items-center mb-2">
+                    <BookOpenCheck class="size-5 text-secondary-500 mr-2" />
+                    <h3 class="text-xl font-bold text-primary-600 dark:text-white"> {course.fields.nmodulos}</h3>
+                </div>
+                
+                    <p class="text-gray-600 dark:text-gray-400 mb-10">{course.fields.dmodulos}</p>
+                
+
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+          <!-- Program Info Card -->
+          <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Información general</h2>
+            <div class="space-y-6">
+              
+                <div class="">
+                    <h4 class=" text-lg font-medium text-gray-700 dark:text-gray-300 mb-4"> Auspiciado por: </h4>
+                   
+                    <div class="flex items-center justify-center space-x-4 mb-4 h-32">
+                    {programa.detallesP.fields.logoP?.map((logo)=>(
+                        <img class="rounded-xl w-50 h-full object-cover"  src={logo.fields.file.url} alt={logo.fields.title} />
+                    ))}
+                      
+                     
+                   
+                      
+                    </div>
+                </div>
+                
+            <div >
+                    <div class="flex items-center mb-2">
+                      <Clock class="size-4 text-secondary-500 mr-2" />
+                      <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300">Duración:</h4>
+                    </div>
+                  <p class="text-gray-600 dark:text-gray-400">{programa.detallesP.fields.duracionP}</p>
+             </div>
+
+              <div>
+                <div class="flex items-center mb-2">
+                  <Calendar class="size-4 text-secondary-500 mr-2" />
+                <h4 class=" text-lg font-medium text-gray-700 dark:text-gray-300">Horario:</h4>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400">{programa.detallesP.fields.horarioP}</p>
+                
+              </div>
+
+              <div>
+                <div class="flex items-center mb-2">
+                  <LaptopMinimal class="size-4 text-secondary-500 mr-2" />
+                <h4 class=" text-lg font-medium text-gray-700 dark:text-gray-300">Modalidad:</h4>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 capitalize">{programa.detallesP.fields.modalidadP}</p>
+              </div>
+
+              
+            </div>
+          </div>
+
+          <!-- Coordinator Card -->
+          <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6">
+            <h3 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Especialistas </h3>
+            {programa.profesores.map(prof => (
+      <div class="flex items-center mb-8">
+
+        <img src={prof.fields.perfilP.fields.file.url} alt={prof.fields.nombreP} class="w-16 h-16 rounded-full object-cover mr-4" />
+        <div>
+          <h4 class="font-medium text-gray-700 dark:text-gray-300">{prof.fields.nombreP}</h4>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">{prof.fields.cvP}</p>
+        </div>
+      </div>
+    ))}
+          </div>
+
+           <!-- Información Card -->
+          <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6">
+            <h3 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Solicita información </h3>
+           
+      <div class="flex items-center mb-8">     
+        
+          <Send class="size-4 text-secondary-500 mr-2 " />
+          <p class="text-gray-600 dark:text-gray-400 text-sm mr-2">email:</p>
+          <p id="email-fundader" class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer mr-1 hover:text-secondary-500">{programa.detallesP.fields.emailS}</p>
+          <Copy class="size-4 text-gray-500 " />
+          
+
+        </div>
+      </div>
+    
+          </div>
+
+
+          <!-- Benefits Card -->
+          <!-- <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6">
+            <h3 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Beneficios</h3>
+            <ul class="space-y-3">
+              {programa.profesores.map(benefit => (
+                <li class="flex items-start">
+                  <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="text-gray-600 dark:text-gray-400">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const email = document.getElementById('email-fundader');
+    const original = email.textContent; // Guarda el valor original
+    email.addEventListener('click', () => {
+      navigator.clipboard.writeText(email.textContent);
+      email.textContent = "¡Email Copiado!";
+      setTimeout(() => {
+        email.textContent = original; // Restaura el valor original
+      }, 1500);
+    });
+  });
+</script>

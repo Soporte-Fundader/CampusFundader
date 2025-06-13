@@ -1,0 +1,147 @@
+---
+import { Facebook, Instagram, Linkedin, Mail, PhoneCall, MapPin, Copy } from 'lucide-astro';
+import { contentfulClient } from "../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { EntryFieldTypes } from "contentful";
+
+
+interface Programa  {
+  contentTypeId: "programa",
+  fields: {
+    title: EntryFieldTypes.Text
+    slug: EntryFieldTypes.Text
+
+
+  }
+}
+
+
+const { items: entries } = await contentfulClient.getEntries<Programa>({
+  content_type: "programa",
+});
+
+
+interface Cursos {
+  contentTypeId: "cursos";
+  fields: {
+    cursosT: EntryFieldTypes.Text;     
+    cursoslug: EntryFieldTypes.Text;
+    cursoDestacado: EntryFieldTypes.Boolean;
+  };
+}
+
+const { items: cursos } = await contentfulClient.getEntries<Cursos>({
+  content_type: "cursos",
+});
+---
+
+<footer class="bg-white dark:bg-primary-800 shadow-md mt-8">
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        
+        <h3 class="text-lg font-semibold text-primary-600 dark:text-white mb-4">Campus Fundader</h3>
+
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Plataforma educativa para el desarrollo de habilidades blandas y STEAM.</p>
+        
+        
+        <div class="flex space-x-4">
+         
+         
+           <a target="_blank" href="https://www.facebook.com/fundader/" class=" p-3 rounded-full hover:bg-blue-600 transition-colors">
+            <Facebook class="h-5 w-5" />
+          </a>
+
+           <a target="_blank" href="https://www.instagram.com/fundaderarraijan/" class=" p-3 rounded-full hover:bg-gradient-to-br from-purple-600 to-orange-600 transition-colors">
+            <Instagram class="h-5 w-5" />
+          </a>
+
+          <a target="_blank" href="https://pa.linkedin.com/company/fundader" class=" p-3 rounded-full hover:bg-blue-400 transition-colors">
+            <Linkedin class="h-5 w-5" />
+          </a>
+          
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="text-lg font-semibold text-primary-600 dark:text-white mb-4">Programas</h3>
+        <ul class="space-y-2">
+            {entries.map((p) => (     
+<li><a href={`/programas/${p.fields.slug ?? "programa"}`} class="text-gray-600 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors">{p.fields.title}</a></li>
+))}
+        </ul>
+
+      </div>
+      
+      <div>
+        <h3 class="text-lg font-semibold text-primary-600 dark:text-white mb-4">Cursos Destacados</h3>
+        <ul class="space-y-2">
+          {cursos
+    .filter((c) => c.fields.cursoDestacado)
+    .slice(0, 5)
+    .map((c) => (
+      <li>
+        <a href={`/cursos/${c.fields.cursoslug ?? "cursos"}`} class="text-gray-600 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors">
+          {c.fields.cursosT}
+        </a>
+      </li>
+    ))
+  }
+        </ul>
+        
+      </div>
+      
+      <div>
+        <h3 class="text-lg font-semibold text-primary-600 dark:text-white mb-4">Contacto</h3>
+        <ul class="space-y-2">
+         
+          <li class="flex items-start">
+            <Mail class="h-5 w-5 mt-0.5 text-gray-500 dark:text-gray-400 mr-2" />
+            <span id="email-supp" class="text-gray-600 dark:text-gray-400 cursor-pointer mr-1 hover:text-secondary-500">soporte@fundader.org</span>
+            <Copy class="size-4 text-gray-500 " />
+          </li>
+
+          <li class="flex items-start">
+            <PhoneCall class="h-5 w-5 mt-0.5 text-gray-500 dark:text-gray-400 mr-2" />
+            <span class="text-gray-600 dark:text-gray-300">255-3924</span>
+          </li>
+
+          <li class="flex items-start">
+            <MapPin class="h-5 w-5 mt-0.5 text-gray-500 dark:text-gray-400 mr-2" />
+            <span class="text-gray-600 dark:text-gray-300">El Tecal, Panamá Oeste</span>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    
+    <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-6 text-center">
+      <p class="text-sm text-gray-500 dark:text-gray-400">© {new Date().getFullYear()} FUNDADER. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const email = document.getElementById('email-supp');
+    const original = email.textContent;
+
+    function copyEmail() {
+      // Intenta copiar al portapapeles
+      navigator.clipboard.writeText(email.textContent)
+        .then(() => {
+          email.textContent = "¡Email Copiado!";
+          setTimeout(() => {
+            email.textContent = original;
+          }, 1500);
+        })
+        .catch(() => {
+          // Fallback para navegadores que no soportan clipboard API
+          window.prompt("Copia el correo:", email.textContent);
+        });
+    }
+
+    email.addEventListener('click', copyEmail);
+    email.addEventListener('touchend', copyEmail);
+  });
+</script>

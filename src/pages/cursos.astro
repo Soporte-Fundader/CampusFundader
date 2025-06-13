@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CourseCard from '../components/CourseCard.astro';
+import CourseFilters from '../components/CourseFilters.astro';
+import { courses } from '../data/courses';
+---
+
+<Layout title="Campus Educativo | Cursos">
+  <!-- Page Header -->
+  <section class="bg-primary-700 py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Explora Nuestros Cursos</h1>
+      <p class="text-primary-100 max-w-3xl">Descubre toda nuestra oferta educativa diseñada para diferentes necesidades y niveles de experiencia.</p>
+    </div>
+  </section>
+  
+  <section class="py-12 bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <!-- Filters -->
+      <CourseFilters />
+      
+      <!-- Courses Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 courses-grid">
+        {courses.map(course => (
+          <CourseCard
+            id={course.id}
+            title={course.title}
+            description={course.description}
+            imageUrl={course.imageUrl}
+            category={course.category}
+            difficulty={course.difficulty}
+            duration={course.duration}
+            progress={course.progress}
+            isFavorite={course.isFavorite}
+            program={course.program}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

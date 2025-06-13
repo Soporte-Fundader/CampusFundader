@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ProgramCard from '../components/PorgramCard.astro';
+import TestimonialCard from "../components/TestimonialCard.astro";
+import CourseCard from '../components/CourseCard.astro';
+import CourseFilters from '../components/CourseFilters.astro';
+import Aliados from '../components/Aliados.astro';
+
+
+---
+
+<Layout title="Campus Educativo | Inicio">
+  <!-- Hero Section -->
+  <Hero />
+  
+  <!-- Featured Programs Section -->
+  <section class="py-16 bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold text-primary-600 dark:text-white mb-3">Programas</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-8 max-w-3xl">Descubre nuestros programas educativos diseñados para diferentes perfiles y necesidades.</p>
+      
+    
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+
+        <!-- Program Card  -->
+         <ProgramCard />
+
+        
+      </div>
+      
+      <div class="text-center mt-10">
+        <a href="/programas" class="inline-flex items-center text-secondary-500 dark:text-secondary-400 hover:text-secondary-600 dark:hover:text-secondary-300 font-medium transition-colors">
+          Ver todos los programas
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+
+
+  <!-- Popular Courses Section -->
+  <section class="py-16 bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold text-primary-600 dark:text-white mb-3">Cursos Populares</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-8 max-w-3xl">Los cursos más solicitados por nuestra comunidad de estudiantes.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+       
+         <CourseCard />
+        
+      </div>
+      
+      <div class="text-center mt-10">
+        <a href="/cursos" class="inline-block bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg">
+          Explorar todos los cursos
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonials Section -->
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    
+  </div>
+
+  <section class="py-16 bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold text-primary-600 dark:text-white mb-3 text-center">Lo que dicen nuestros estudiantes</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-12 text-center max-w-3xl mx-auto">Testimonios de personas que han transformado sus vidas a través de nuestros programas educativos.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Testimonial -->
+        
+            <TestimonialCard />
+       
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <Aliados />
+
+</Layout>
