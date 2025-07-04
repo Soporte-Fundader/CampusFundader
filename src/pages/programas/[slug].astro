@@ -1,7 +1,17 @@
 ---
 import { AstroError } from 'astro/errors';
 import CourseCard from '../../components/CourseCard.astro';
-import { Check, BookOpenCheck, Clock, Calendar, LaptopMinimal, Send, Copy } from 'lucide-astro';
+
+
+import CheckIcon from "../../Icons/CheckIcon.astro";
+import BookOpenCheckIcon from "../../Icons/BookOpenCheckIcon.astro";
+import ClockIcon from "../../Icons/ClockIcon.astro";
+import CalendarIcon from "../../Icons/CalendarIcon.astro";
+import LaptopMinimalIcon from "../../Icons/LaptopMinimalIcon.astro";
+import SendIcon from "../../Icons/SendIcon.astro";
+import CopyIcon from "../../Icons/CopyIcon.astro";
+
+
 import Layout from '../../layouts/Layout.astro';
 import { contentfulClient } from "../../lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
@@ -86,7 +96,7 @@ const programa = items[0].fields;
     <div class="absolute bottom-0 left-0 right-0 p-8">
       <div class="container mx-auto">
         <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">{programa.title}</h1>
-        <p class="text-md md:text-xl text-gray-200 max-w-3xl">{programa.description}</p>
+        <p class="text-md md:text-xl text-gray-200">{programa.description}</p>
       </div>
     </div>
   </section>
@@ -103,7 +113,7 @@ const programa = items[0].fields;
             <ul class="space-y-3">
                 {programa.objetives.map(obj => (
                  <li class="flex items-start">
-                   <Check class="size-5 text-secondary-500 mr-2" />
+                   <CheckIcon class="size-5 text-secondary-500 mr-2" />
 
                   <p class="text-gray-700 dark:text-gray-300">{obj.fields.contet}</p>
                  </li>
@@ -117,7 +127,7 @@ const programa = items[0].fields;
             <div class="grid grid-cols-1 ">
               {programa.modulos.map(course => (
                 <div class="flex items-center mb-2">
-                    <BookOpenCheck class="size-5 text-secondary-500 mr-2" />
+                    <BookOpenCheckIcon class="size-5 text-secondary-500 mr-2" />
                     <h3 class="text-xl font-bold text-primary-600 dark:text-white"> {course.fields.nmodulos}</h3>
                 </div>
                 
@@ -152,7 +162,7 @@ const programa = items[0].fields;
                 
             <div >
                     <div class="flex items-center mb-2">
-                      <Clock class="size-4 text-secondary-500 mr-2" />
+                      <ClockIcon class="size-4 text-secondary-500 mr-2" />
                       <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300">Duración:</h4>
                     </div>
                   <p class="text-gray-600 dark:text-gray-400">{programa.detallesP.fields.duracionP}</p>
@@ -160,7 +170,7 @@ const programa = items[0].fields;
 
               <div>
                 <div class="flex items-center mb-2">
-                  <Calendar class="size-4 text-secondary-500 mr-2" />
+                  <CalendarIcon class="size-4 text-secondary-500 mr-2" />
                 <h4 class=" text-lg font-medium text-gray-700 dark:text-gray-300">Horario:</h4>
                 </div>
                 <p class="text-gray-600 dark:text-gray-400">{programa.detallesP.fields.horarioP}</p>
@@ -169,7 +179,7 @@ const programa = items[0].fields;
 
               <div>
                 <div class="flex items-center mb-2">
-                  <LaptopMinimal class="size-4 text-secondary-500 mr-2" />
+                  <LaptopMinimalIcon class="size-4 text-secondary-500 mr-2" />
                 <h4 class=" text-lg font-medium text-gray-700 dark:text-gray-300">Modalidad:</h4>
                 </div>
                 <p class="text-gray-600 dark:text-gray-400 capitalize">{programa.detallesP.fields.modalidadP}</p>
@@ -185,7 +195,8 @@ const programa = items[0].fields;
             {programa.profesores.map(prof => (
       <div class="flex items-center mb-8">
 
-        <img src={prof.fields.perfilP.fields.file.url} alt={prof.fields.nombreP} class="w-16 h-16 rounded-full object-cover mr-4" />
+         <img src={prof.fields.perfilP.fields.file.url} alt={prof.fields.nombreP} class="w-16 h-16 rounded-full object-cover mr-4" />
+
         <div>
           <h4 class="font-medium text-gray-700 dark:text-gray-300">{prof.fields.nombreP}</h4>
           <p class="text-gray-600 dark:text-gray-400 text-sm">{prof.fields.cvP}</p>
@@ -200,10 +211,10 @@ const programa = items[0].fields;
            
       <div class="flex items-center mb-8">     
         
-          <Send class="size-4 text-secondary-500 mr-2 " />
+          <SendIcon class="size-4 text-secondary-500 mr-2 " />
           <p class="text-gray-600 dark:text-gray-400 text-sm mr-2">email:</p>
           <p id="email-fundader" class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer mr-1 hover:text-secondary-500">{programa.detallesP.fields.emailS}</p>
-          <Copy class="size-4 text-gray-500 " />
+          <CopyIcon class="size-4 text-gray-500 " />
           
 
         </div>

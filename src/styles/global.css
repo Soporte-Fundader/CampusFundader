@@ -3,45 +3,300 @@
 @plugin "@tailwindcss/forms";
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
+  /* Paleta de colores expandida */
+  --color-primary-50: #f0f4f8;
+  --color-primary-100: #d9e6f2;
+  --color-primary-200: #b3cde0;
+  --color-primary-300: #8db4ce;
+  --color-primary-400: #6699cc;
+  --color-primary-500: #4a7ba7;
+  --color-primary-600: #2a364e;
+  --color-primary-700: #1e2a3a;
+  --color-primary-800: #151f2e;
+  --color-primary-900: #0d1421;
 
-          --color-primary-50: #f0f2f5;
-          --color-primary-100: #e1e5ea;
-          --color-primary-200: #c3ccd6;
-          --color-primary-300: #a5b2c1;
-          --color-primary-400: #7f91a7;
-          --color-primary-500: #5b708c;
-          --color-primary-600: #2a364e;
-          --color-primary-700: #232e43;
-          --color-primary-800: #1c2538;
-          --color-primary-900: #151c2c;
+  --color-secondary-50: #fff8f5;
+  --color-secondary-100: #ffede0;
+  --color-secondary-200: #ffd6b8;
+  --color-secondary-300: #ffb88a;
+  --color-secondary-400: #ff9a5c;
+  --color-secondary-500: #f76123;
+  --color-secondary-600: #e04d1a;
+  --color-secondary-700: #c23d15;
+  --color-secondary-800: #a03012;
+  --color-secondary-900: #7d240e;
 
-          --color-secondary-50: #fff5f0;
-          --color-secondary-100: #ffeae0;
-          --color-secondary-200: #ffd0b6;
-          --color-secondary-300: #ffb38c;
-          --color-secondary-400: #fd8a4d;
-          --color-secondary-500: #f76123; /* Secondary color */
-          --color-secondary-600: #e84c13;
-          --color-secondary-700: #c13b10;
-          --color-secondary-800: #9b2f0e;
-          --color-secondary-900: #7c240c;
+  /* Colores adicionales para mejor UX */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
 
-          --font-sans: 'Inter', system-ui, sans-serif;
-          --font-heading: 'Montserrat', system-ui, sans-serif;
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+
+  /* Tipografía mejorada */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Espaciado consistente */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+
+  /* Sombras elegantes */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  /* Border radius consistente */
+  --radius-sm: 0.375rem;   /* 6px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+}
+
+/* Reset y base styles mejorados */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 
-} 
+/* Animaciones globales */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  html {
-    scroll-behavior: smooth;
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(247, 97, 35, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(247, 97, 35, 0);
+  }
+}
+
+/* Clases utilitarias para animaciones */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.4s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Mejoras en transiciones */
+.transition-all-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-transform-smooth {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Gradientes modernos */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-800) 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-700) 100%);
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-primary-700) 50%, var(--color-secondary-800) 100%);
+}
+
+.gradient-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+/* Efectos de hover mejorados */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-2xl);
+}
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(247, 97, 35, 0.3);
+}
+
+/* Estilos para formularios mejorados */
+.form-input {
+  @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200;
+}
+
+.form-select {
+  @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-secondary-500 focus:border-transparent transition-all duration-200;
+}
+
+/* Botones mejorados */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-3 bg-secondary-600 hover:bg-secondary-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-600;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center px-6 py-3 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium rounded-xl transition-all duration-200;
+}
+
+/* Cards mejoradas */
+.card {
+  @apply bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 overflow-hidden;
+}
+
+.card-hover {
+  @apply hover:scale-105 hover:-translate-y-2;
+}
+
+/* Contenedores responsivos */
+.container-responsive {
+  @apply container mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Utilidades de espaciado */
+.section-padding {
+  @apply py-16 lg:py-24;
+}
+
+.content-padding {
+  @apply px-6 py-8;
+}
+
+/* Mejoras para accesibilidad */
+.focus-visible {
+  @apply focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .container-responsive {
+    @apply px-4;
   }
   
-  body {
-    font-family: 'Inter', sans-serif;
-    line-height: 1.5;
+  .section-padding {
+    @apply py-12;
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+  h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
     line-height: 1.2;
   }
+}
+
+/* Mejoras para modo oscuro */
+.dark {
+  color-scheme: dark;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500 dark:bg-gray-500;
+}
+
+/* Reducir movimiento para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

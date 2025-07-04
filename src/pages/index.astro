@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import ProgramCard from '../components/PorgramCard.astro';
+import ProgramCard from '../components/ProgramCard.astro';
 import TestimonialCard from "../components/TestimonialCard.astro";
 import CourseCard from '../components/CourseCard.astro';
-import CourseFilters from '../components/CourseFilters.astro';
 import Aliados from '../components/Aliados.astro';
 
+import BookOpenIcon from '../Icons/BookOpenIcon.astro';
+import TrendingUpIcon from '../Icons/TrendingUpIcon.astro';
+import ArrowRightIcon from '../Icons/ArrowRightIcon.astro';
+import UsersIcon from '../Icons/UsersIcon.astro';
 
 ---
 
@@ -14,76 +17,156 @@ import Aliados from '../components/Aliados.astro';
   <!-- Hero Section -->
   <Hero />
   
+ 
+
   <!-- Featured Programs Section -->
-  <section class="py-16 bg-gray-50 dark:bg-gray-900">
+  <section class="py-16 lg:py-24 bg-gray-50 dark:bg-gray-900">
     <div class="container mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-bold text-primary-600 dark:text-white mb-3">Programas</h2>
-      <p class="text-gray-600 dark:text-gray-300 mb-8 max-w-3xl">Descubre nuestros programas educativos diseñados para diferentes perfiles y necesidades.</p>
-      
-    
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-
-        <!-- Program Card  -->
-         <ProgramCard />
-
-        
+      <!-- Header mejorado -->
+      <div class="text-center mb-16 animate-fade-in-up">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium mb-4">
+          <BookOpenIcon class="h-4 w-4" />
+          <span>Programas Educativos</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+          Transforma tu 
+          <span class="bg-gradient-to-r from-secondary-300 to-secondary-600 bg-clip-text text-transparent">
+            futuro profesional
+          </span>
+        </h2>
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300  mx-auto leading-relaxed">
+          Descubre nuestros programas educativos diseñados para diferentes perfiles y necesidades, 
+          con metodologías innovadoras y contenido actualizado.
+        </p>
       </div>
       
-      <div class="text-center mt-10">
-        <a href="/programas" class="inline-flex items-center text-secondary-500 dark:text-secondary-400 hover:text-secondary-600 dark:hover:text-secondary-300 font-medium transition-colors">
-          Ver todos los programas
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+      <!-- Grid de programas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <ProgramCard />
+      </div>
+      
+      <!-- CTA mejorado -->
+      <div class="text-center animate-fade-in-up">
+        <a 
+          href="/programas" 
+          class="group inline-flex items-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+        >
+          <span>Ver todos los programas</span>
+          <ArrowRightIcon class="h-5 w-5 transition-transform group-hover:translate-x-1" />
         </a>
       </div>
     </div>
   </section>
-  
+
+
+
+
+
 
 
   <!-- Popular Courses Section -->
-  <section class="py-16 bg-white dark:bg-gray-800">
+  <section class="py-16 lg:py-24 bg-white dark:bg-gray-800">
     <div class="container mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-bold text-primary-600 dark:text-white mb-3">Cursos Populares</h2>
-      <p class="text-gray-600 dark:text-gray-300 mb-8 max-w-3xl">Los cursos más solicitados por nuestra comunidad de estudiantes.</p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-       
-         <CourseCard />
-        
+      <!-- Header mejorado -->
+      <div class="text-center mb-16 animate-fade-in-up">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-secondary-100 dark:bg-secondary-900/30 text-secondary-700 dark:text-secondary-300 rounded-full text-sm font-medium mb-4">
+          <TrendingUpIcon class="h-4 w-4" />
+          <span>Destacados</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+          Cursos que están 
+          <span class="bg-gradient-to-r from-secondary-400 to-secondary-600 bg-clip-text text-transparent">
+            transformando carreras
+          </span>
+        </h2>
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mx-auto leading-relaxed">
+          Los cursos más solicitados por nuestra comunidad de estudiantes, 
+          con contenido actualizado y metodologías probadas.
+        </p>
       </div>
       
-      <div class="text-center mt-10">
-        <a href="/cursos" class="inline-block bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg">
-          Explorar todos los cursos
+      <!-- Grid de cursos -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
+        <CourseCard />
+      </div>
+      
+      <!-- CTA mejorado -->
+      <div class="text-center animate-fade-in-up">
+        <a 
+          href="/cursos" 
+          class="group inline-flex items-center gap-3 px-8 py-4 bg-secondary-600 hover:bg-secondary-700 text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+        >
+          <span>Explorar todos los cursos</span>
+          <ArrowRightIcon class="h-5 w-5 transition-transform group-hover:translate-x-1" />
         </a>
       </div>
     </div>
   </section>
   
+
+
+
   <!-- Testimonials Section -->
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    
-  </div>
-
-  <section class="py-16 bg-gray-50 dark:bg-gray-900">
+  <section class="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
     <div class="container mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-bold text-primary-600 dark:text-white mb-3 text-center">Lo que dicen nuestros estudiantes</h2>
-      <p class="text-gray-600 dark:text-gray-300 mb-12 text-center max-w-3xl mx-auto">Testimonios de personas que han transformado sus vidas a través de nuestros programas educativos.</p>
+      <!-- Header mejorado -->
+      <div class="text-center mb-16 animate-fade-in-up">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm font-medium mb-4">
+          <UsersIcon class="h-4 w-4" />
+          <span>Testimonios</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+          Historias de 
+          <span class="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+            éxito real
+          </span>
+        </h2>
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300  mx-auto leading-relaxed">
+          Conoce las experiencias de personas que han transformado sus vidas 
+          a través de nuestros programas educativos.
+        </p>
+      </div>
       
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Testimonial -->
+      <!-- Grid de testimonios -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <TestimonialCard />
+      </div>
+    </div>
+  </section>
+  
+  <!-- Aliados Section -->
+  <Aliados />
+
+  <!-- CTA Final Section -->
+  <section class="py-16 lg:py-24 bg-gradient-to-r from-primary-900 via-primary-800 to-secondary-900 text-white relative overflow-hidden">
+    <!-- Elementos decorativos -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 bg-secondary-400 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 text-center relative z-10">
+      <div class="max-w-4xl mx-auto animate-fade-in-up">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+          ¿Listo para comenzar tu 
+          <span class="bg-gradient-to-r from-secondary-400 to-yellow-400 bg-clip-text text-transparent">
+            transformación educativa?
+          </span>
+        </h2>
+        <p class="text-lg md:text-xl mb-12 text-white/90 mx-auto leading-relaxed">
+          Únete a nuestra comunidad educativa y transforma tu vida con nuevos conocimientos, 
+          habilidades y oportunidades profesionales.
+        </p>
         
-            <TestimonialCard />
        
-          </div>
+        
+        <!-- Estadística final -->
+        <div class="mt-16 pt-8 border-t border-white/20">
+          <p class="text-white/80 text-lg">
+            Más de <span class="font-bold text-secondary-400">2000 estudiantes</span> ya han comenzado su transformación
+          </p>
         </div>
       </div>
     </div>
   </section>
-  
-  <Aliados />
-
 </Layout>

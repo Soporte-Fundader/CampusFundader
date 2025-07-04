@@ -1,6 +1,10 @@
 ---
-import { User, Menu, X } from 'lucide-astro';
+
 import ThemeToggle from './ThemeToggle.astro';
+import UserIcon from '../Icons/UserIcon.astro';
+import MenuIcon from '../Icons/MenuIcon.astro';
+import XIcon from '../Icons/XIcon.astro';
+import User from '../Icons/UserIcon.astro';
 
 interface Props {
   currentPath?: string;
@@ -10,13 +14,14 @@ const { currentPath = Astro.url.pathname } = Astro.props;
 
 const navItems = [
   { href: '/', label: 'Inicio' },
+  { href: '/cisco-academy', label: 'Cisco Academy' },
   { href: '/cursos', label: 'Cursos' }
 ];
 
 const isActive = (href: string) => currentPath === href;
 ---
 
-<header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-sm border-b border-gray-200/20 dark:border-gray-700/20">
+<header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md shadow-sm border-b border-gray-200/20 dark:border-gray-700/20">
   <div class="container mx-auto px-4 py-3">
     <div class="flex items-center justify-between">
       <!-- Logo Section -->
@@ -27,14 +32,14 @@ const isActive = (href: string) => currentPath === href;
           aria-label="Campus Fundader - Ir al inicio"
         >
           <img 
-            src="/LogoF_.png" 
+            src="/hubcursos/LogoF_.svg" 
             alt="Campus Fundader Logo" 
-            class="h-10 w-auto transition-transform group-hover:scale-105" 
+            class="h-18 w-auto transition-transform group-hover:scale-105" 
             loading="eager"
           />
-          <span class="text-base sm:text-xl font-heading font-bold text-primary-600 dark:text-white transition-colors">
+          <!-- <span class="hidden sm:block text-xl font-heading font-bold text-primary-600 dark:text-white transition-colors">
             Campus Fundader
-          </span>
+          </span> -->
         </a>
       </div>
       
@@ -69,11 +74,11 @@ const isActive = (href: string) => currentPath === href;
           href="https://campus.fundader.org/login/index.php?loginredirect=1" 
           target="_blank"
           rel="noopener noreferrer"
-          class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-secondary-600 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300 hover:bg-secondary-50 dark:hover:bg-secondary-900/20 rounded-lg transition-all duration-200"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-secondary-600 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300 hover:bg-secondary-50 dark:hover:bg-secondary-900/20 rounded-lg transition-all duration-200"
           aria-label="Acceder al campus (se abre en nueva ventana)"
         >
           <span>Acceder</span>
-          <User class="h-4 w-4" />
+          <UserIcon class="h-4 w-4" />
         </a>
 
         <!-- Theme Toggle -->
@@ -87,8 +92,8 @@ const isActive = (href: string) => currentPath === href;
           aria-expanded="false"
           aria-controls="mobile-menu"
         >
-          <Menu class="h-5 w-5" id="menu-icon" />
-          <X class="h-5 w-5 hidden" id="close-icon" />
+          <MenuIcon class="h-5 w-5" id="menu-icon" />
+          <XIcon class="h-5 w-5 hidden" id="close-icon" />
         </button>
       </div>
     </div>
@@ -140,7 +145,7 @@ const isActive = (href: string) => currentPath === href;
 </header>
 
 <script>
-  class MobileMenu {
+  class HeaderNavigation {
     private toggle: HTMLElement | null;
     private menu: HTMLElement | null;
     private menuIcon: HTMLElement | null;
@@ -157,37 +162,38 @@ const isActive = (href: string) => currentPath === href;
     }
 
     private init(): void {
-      if (!this.toggle || !this.menu) return;
-      
-      this.toggle.addEventListener('click', () => this.toggleMenu());
-      
-      // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
-        if (this.isOpen && !this.toggle?.contains(e.target as Node) && !this.menu?.contains(e.target as Node)) {
-          this.closeMenu();
-        }
-      });
-      
-      // Close menu on escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.isOpen) {
-          this.closeMenu();
-        }
-      });
-      
-      // Close menu on resize to desktop
-      window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768 && this.isOpen) {
-          this.closeMenu();
-        }
-      });
+      // Mobile menu functionality
+      if (this.toggle && this.menu) {
+        this.toggle.addEventListener('click', () => this.toggleMobileMenu());
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+          if (this.isOpen && !this.toggle?.contains(e.target as Node) && !this.menu?.contains(e.target as Node)) {
+            this.closeMobileMenu();
+          }
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.isOpen) {
+            this.closeMobileMenu();
+          }
+        });
+        
+        // Close menu on resize to desktop
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= 768 && this.isOpen) {
+            this.closeMobileMenu();
+          }
+        });
+      }
     }
 
-    private toggleMenu(): void {
-      this.isOpen ? this.closeMenu() : this.openMenu();
+    private toggleMobileMenu(): void {
+      this.isOpen ? this.closeMobileMenu() : this.openMobileMenu();
     }
 
-    private openMenu(): void {
+    private openMobileMenu(): void {
       this.menu?.classList.remove('hidden');
       this.menuIcon?.classList.add('hidden');
       this.closeIcon?.classList.remove('hidden');
@@ -199,7 +205,7 @@ const isActive = (href: string) => currentPath === href;
       document.body.style.overflow = 'hidden';
     }
 
-    private closeMenu(): void {
+    private closeMobileMenu(): void {
       this.menu?.classList.add('hidden');
       this.menuIcon?.classList.remove('hidden');
       this.closeIcon?.classList.add('hidden');
@@ -214,6 +220,6 @@ const isActive = (href: string) => currentPath === href;
 
   // Initialize when DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
-    new MobileMenu();
+    new HeaderNavigation();
   });
 </script>

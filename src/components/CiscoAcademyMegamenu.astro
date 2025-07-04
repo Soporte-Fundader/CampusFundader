@@ -1,0 +1,214 @@
+---
+import type { EntryFieldTypes } from "contentful";
+import { contentfulClient } from "../lib/contentful";
+import ClockIcon from "../Icons/ClockIcon.astro";
+import AwardIcon from "../Icons/AwardIcon.astro";
+import BookOpenIcon from "../Icons/BookOpenIcon.astro";
+import ChevronRightIcon from "../Icons/ChevronRightIcon.astro";
+import StarIcon from "../Icons/StarIcon.astro";
+import UsersIcon from "../Icons/UsersIcon.astro";
+import GlobeIcon from "../Icons/GlobeIcon.astro";
+
+// Interfaz para los cursos de Cisco Academy
+interface CiscoCourse {
+    contentTypeId: "ciscoCourses";
+    fields: {
+        titulocisco: EntryFieldTypes.Text;
+        slugcisco: EntryFieldTypes.Text;
+        descisco: EntryFieldTypes.Text;
+        shortDescription: EntryFieldTypes.Text;
+        imagencisco: EntryFieldTypes.AssetLink;
+        difcisco: EntryFieldTypes.Text;
+        durationcisco: EntryFieldTypes.Text;
+        categorycisco: EntryFieldTypes.Text;
+        certificationcisco: EntryFieldTypes.Boolean;
+        badgecisco: EntryFieldTypes.Boolean;
+        enrollmentCountcisco: EntryFieldTypes.Integer;
+        ratingcisco: EntryFieldTypes.Integer;
+        prerequisites: EntryFieldTypes.Text;
+        learningOutcomes: EntryFieldTypes.Text;
+    };
+}
+
+// Obtener cursos de Cisco Academy desde Contentful
+const { items: ciscoCourses } = await contentfulClient.getEntries<CiscoCourse>({
+  content_type: "ciscoCourses",
+  limit: 8,
+  order: "-fields.enrollmentCountcisco"
+});
+
+// Agrupar cursos por categoría
+const coursesByCategory = ciscoCourses.reduce((acc, course) => {
+  const category = course.fields.categorycisco || 'General';
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(course);
+  return acc;
+}, {} as Record<string, typeof ciscoCourses>);
+
+const categories = Object.keys(coursesByCategory);
+---
+
+<div 
+  id="cisco-megamenu" 
+  class="absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-2xl border-t-4 border-blue-600 opacity-0 invisible transform translate-y-2 transition-all duration-300 ease-out z-50"
+  role="menu"
+  aria-label="Cisco Academy Courses"
+>
+  <div class="container mx-auto px-6 py-8">
+    <!-- Header Section -->
+    <div class="flex items-center justify-between mb-8 pb-6 border-b border-gray-200 dark:border-gray-700">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+          <GlobeIcon class="h-6 w-6 text-white" />
+          
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Cisco Networking Academy</h2>
+          <p class="text-gray-600 dark:text-gray-300">Desarrolla habilidades tecnológicas que transforman carreras</p>
+        </div>
+      </div>
+      <a 
+        href="/cisco-academy" 
+        class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-lg hover:shadow-xl"
+      >
+        Ver todos los cursos
+        <ChevronRightIcon class="ml-2 h-4 w-4" />
+      </a>
+    </div>
+
+    <!-- Courses Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      {ciscoCourses.slice(0, 8).map((course) => (
+        <div class="group bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500">
+          <!-- Course Image -->
+          <div class="relative h-40 overflow-hidden">
+            <img 
+              src={course.fields.imagencisco?.fields?.file?.url ?? '/images/cisco-default.jpg'}
+              alt={course.fields.titulocisco}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+            <!-- Difficulty Level -->
+            <div class="absolute top-3 right-3">
+              <span class={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                course.fields.difcisco === 'Principiante' 
+                  ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                  : course.fields.difcisco === 'Intermedio'
+                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                  : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+              }`}>
+                {course.fields.difcisco}
+              </span>
+            </div>
+          </div>
+
+          <!-- Course Content -->
+          <div class="p-4">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              {course.fields.titulocisco}
+            </h3>
+            
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
+              {course.fields.shortDescription || course.fields.descisco}
+            </p>
+
+            <!-- Course Meta -->
+            <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-3">
+              <div class="flex items-center">
+                <ClockIcon class="w-3 h-3 mr-1" />
+                {course.fields.durationcisco}
+              </div>
+              <div class="flex items-center">
+                <UsersIcon class="w-3 h-3 mr-1" />
+                {course.fields.enrollmentCountcisco || 0}
+              </div>
+            </div>
+
+            <!-- Certifications & Badges -->
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex space-x-2">
+                {course.fields.certificationcisco && (
+                  <div class="flex items-center text-xs text-blue-600 dark:text-blue-400">
+                    <AwardIcon class="w-3 h-3 mr-1" />
+                    Certificación
+                  </div>
+                )}
+                {course.fields.badgecisco && (
+                  <div class="flex items-center text-xs text-purple-600 dark:text-purple-400">
+                    <BookOpenIcon class="w-3 h-3 mr-1" />
+                    Insignia
+                  </div>
+                )}
+              </div>
+              
+              <!-- Rating -->
+              {course.fields.ratingcisco && (
+                <div class="flex items-center">
+                  <StarIcon class="w-3 h-3 text-yellow-400 fill-current" />
+                  <span class="text-xs text-gray-600 dark:text-gray-300 ml-1">
+                    {course.fields.ratingcisco}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            <!-- CTA Button -->
+            <a 
+              href={`/cisco-academy/${course.fields.slugcisco}`}
+              class="block w-full text-center bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+            >
+              Ver curso
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Categories Quick Access -->
+    <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Explorar por categoría</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {categories.slice(0, 4).map((category) => (
+          <a 
+            href={`/cisco-academy?category=${encodeURIComponent(category)}`}
+            class="group flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+          >
+            <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/60 transition-colors">
+              <BookOpenIcon class="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <h4 class="font-medium text-gray-900 dark:text-white text-sm">{category}</h4>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                {coursesByCategory[category].length} curso{coursesByCategory[category].length !== 1 ? 's' : ''}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Smooth animations */
+  @media (prefers-reduced-motion: reduce) {
+    #cisco-megamenu {
+      transition: none;
+    }
+    
+    .group img {
+      transition: none;
+    }
+  }
+</style>

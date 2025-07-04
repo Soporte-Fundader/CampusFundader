@@ -1,25 +1,28 @@
 ---
-import { Facebook, Instagram, Linkedin, Mail, PhoneCall, MapPin, Copy } from 'lucide-astro';
 import { contentfulClient } from "../lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { EntryFieldTypes } from "contentful";
-
+import FacebookIcon from '../Icons/FacebookIcon.astro';
+import InstagramIcon from '../Icons/InstagramIcon.astro';
+import LinkedinIcon from '../Icons/LinkedinIcon.astro'; 
+import MailIcon from '../Icons/MailIcon.astro';
+import PhoneCallIcon from '../Icons/PhoneCallIcon.astro';
+import MapPinIcon from '../Icons/MapPinIcon.astro'; 
+import HeartIcon from '../Icons/HeartIcon.astro';
+import ArrowUpIcon from '../Icons/ArrowUpIcon.astro';
+import CopyIcon from "../Icons/CopyIcon.astro";
 
 interface Programa  {
   contentTypeId: "programa",
   fields: {
     title: EntryFieldTypes.Text
     slug: EntryFieldTypes.Text
-
-
   }
 }
-
 
 const { items: entries } = await contentfulClient.getEntries<Programa>({
   content_type: "programa",
 });
-
 
 interface Cursos {
   contentTypeId: "cursos";
@@ -35,100 +38,199 @@ const { items: cursos } = await contentfulClient.getEntries<Cursos>({
 });
 ---
 
-<footer class="bg-white dark:bg-primary-800 shadow-md mt-8">
-  <div class="container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div>
-        
-        <h3 class="text-lg font-semibold text-primary-600 dark:text-white mb-4">Campus Fundader</h3>
-
-        <p class="text-gray-600 dark:text-gray-300 mb-4">Plataforma educativa para el desarrollo de habilidades blandas y STEAM.</p>
-        
-        
-        <div class="flex space-x-4">
-         
-         
-           <a target="_blank" href="https://www.facebook.com/fundader/" class=" p-3 rounded-full hover:bg-blue-600 transition-colors">
-            <Facebook class="h-5 w-5" />
-          </a>
-
-           <a target="_blank" href="https://www.instagram.com/fundaderarraijan/" class=" p-3 rounded-full hover:bg-gradient-to-br from-purple-600 to-orange-600 transition-colors">
-            <Instagram class="h-5 w-5" />
-          </a>
-
-          <a target="_blank" href="https://pa.linkedin.com/company/fundader" class=" p-3 rounded-full hover:bg-blue-400 transition-colors">
-            <Linkedin class="h-5 w-5" />
-          </a>
+<footer class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+  <!-- Elementos decorativos de fondo -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute top-0 left-0 w-96 h-96 bg-secondary-500 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-primary-500 rounded-full blur-3xl"></div>
+  </div>
+  
+  <!-- Contenido principal -->
+  <div class="relative z-10">
+    <!-- Sección principal del footer -->
+    <div class="container-responsive section-padding border-b border-gray-700/50">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <!-- Información de la empresa -->
+        <div class="lg:col-span-1">
+          <div class="flex items-center gap-3 mb-6">
+            <img 
+              src="/hubcursos/LogoF_.svg" 
+              alt="Campus Fundader Logo" 
+              class="h-24 w-auto" 
+            />
+            <!-- <h3 class="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              Campus Fundader
+            </h3> -->
+          </div>
           
+          <p class="text-gray-300 mb-6 leading-relaxed">
+            Plataforma educativa líder en el desarrollo de habilidades blandas y STEAM, 
+            transformando vidas a través de la educación de calidad.
+          </p>
+          
+          <!-- Redes sociales mejoradas -->
+          <div class="flex gap-4">
+            <a 
+              target="_blank" 
+              href="https://www.facebook.com/fundader/" 
+              class="group w-12 h-12 bg-gray-800/50 hover:bg-blue-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25"
+              aria-label="Síguenos en Facebook"
+            >
+              <FacebookIcon class="h-5 w-5 text-gray-400 group-hover:text-white transition-colors" />
+            </a>
+
+            <a 
+              target="_blank" 
+              href="https://www.instagram.com/fundaderarraijan/" 
+              class="group w-12 h-12 bg-gray-800/50 hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/25"
+              aria-label="Síguenos en Instagram"
+            >
+              <InstagramIcon class="h-5 w-5 text-gray-400 group-hover:text-white transition-colors" />
+            </a>
+
+            <a 
+              target="_blank" 
+              href="https://pa.linkedin.com/company/fundader" 
+              class="group w-12 h-12 bg-gray-800/50 hover:bg-blue-700 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25"
+              aria-label="Síguenos en LinkedIn"
+            >
+              <LinkedinIcon class="h-5 w-5 text-gray-400 group-hover:text-white transition-colors" />
+            </a>
+          </div>
         </div>
-      </div>
-      
-      <div>
-        <h3 class="text-lg font-semibold text-primary-600 dark:text-white mb-4">Programas</h3>
-        <ul class="space-y-2">
-            {entries.map((p) => (     
-<li><a href={`/programas/${p.fields.slug ?? "programa"}`} class="text-gray-600 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors">{p.fields.title}</a></li>
-))}
-        </ul>
-
-      </div>
-      
-      <div>
-        <h3 class="text-lg font-semibold text-primary-600 dark:text-white mb-4">Cursos Destacados</h3>
-        <ul class="space-y-2">
-          {cursos
-    .filter((c) => c.fields.cursoDestacado)
-    .slice(0, 5)
-    .map((c) => (
-      <li>
-        <a href={`/cursos/${c.fields.cursoslug ?? "cursos"}`} class="text-gray-600 dark:text-gray-300 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors">
-          {c.fields.cursosT}
-        </a>
-      </li>
-    ))
-  }
-        </ul>
         
-      </div>
-      
-      <div>
-        <h3 class="text-lg font-semibold text-primary-600 dark:text-white mb-4">Contacto</h3>
-        <ul class="space-y-2">
-         
-          <li class="flex items-start">
-            <Mail class="h-5 w-5 mt-0.5 text-gray-500 dark:text-gray-400 mr-2" />
-            <span id="email-supp" class="text-gray-600 dark:text-gray-400 cursor-pointer mr-1 hover:text-secondary-500">soporte@fundader.org</span>
-            <Copy class="size-4 text-gray-500 " />
-          </li>
+        <!-- Programas -->
+        <div>
+          <h3 class="text-xl font-bold mb-6 text-white">Programas</h3>
+          <ul class="space-y-3">
+            {entries.slice(0, 6).map((p) => (     
+              <li>
+                <a 
+                  href={`/programas/${p.fields.slug ?? "programa"}`} 
+                  class="text-gray-300 hover:text-secondary-400 transition-colors duration-200 flex items-center group"
+                >
+                  <span class="w-1 h-1 bg-secondary-500 rounded-full mr-3 group-hover:w-2 transition-all duration-200"></span>
+                  {p.fields.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <!-- Cursos Destacados -->
+        <div>
+          <h3 class="text-xl font-bold mb-6 text-white">Cursos Destacados</h3>
+          <ul class="space-y-3">
+            {cursos
+              .filter((c) => c.fields.cursoDestacado)
+              .slice(0, 6)
+              .map((c) => (
+                <li>
+                  <a 
+                    href={`/cursos/${c.fields.cursoslug ?? "cursos"}`} 
+                    class="text-gray-300 hover:text-secondary-400 transition-colors duration-200 flex items-center group"
+                  >
+                    <span class="w-1 h-1 bg-secondary-500 rounded-full mr-3 group-hover:w-2 transition-all duration-200"></span>
+                    {c.fields.cursosT}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        
+        <!-- Contacto -->
+        <div>
+          <h3 class="text-xl font-bold mb-6 text-white">Contacto</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start group">
+              <div class="w-10 h-10 bg-gray-800/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-secondary-600/20 transition-colors">
+                <MailIcon class="h-5 w-5 text-gray-400 group-hover:text-secondary-400 transition-colors" />
 
-          <li class="flex items-start">
-            <PhoneCall class="h-5 w-5 mt-0.5 text-gray-500 dark:text-gray-400 mr-2" />
-            <span class="text-gray-600 dark:text-gray-300">255-3924</span>
-          </li>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 cursor-pointer">
+                <span 
+                  id="email-supp" 
+                  class="text-gray-300 hover:text-secondary-400 cursor-pointer transition-colors duration-200 block"
+                >
+                  soporte@fundader.org
+                  
+                </span>
+                <CopyIcon class="size-4 text-gray-500 " />
+                </div>
+                
+                
+                <span class="text-xs text-gray-500">Haz clic para copiar</span>
+              </div>
+            </li>
 
-          <li class="flex items-start">
-            <MapPin class="h-5 w-5 mt-0.5 text-gray-500 dark:text-gray-400 mr-2" />
-            <span class="text-gray-600 dark:text-gray-300">El Tecal, Panamá Oeste</span>
-          </li>
+            <li class="flex items-start group">
+              <div class="w-10 h-10 bg-gray-800/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-secondary-600/20 transition-colors">
+                <PhoneCallIcon class="h-5 w-5 text-gray-400 group-hover:text-secondary-400 transition-colors" />
+              </div>
+              <div>
+                <span class="text-gray-300">255-3924</span>
+                <span class="text-xs text-gray-500 block">Lunes a Viernes, 8AM - 5PM</span>
+              </div>
+            </li>
 
-        </ul>
+            <li class="flex items-start group">
+              <div class="w-10 h-10 bg-gray-800/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-secondary-600/20 transition-colors">
+                <MapPinIcon class="h-5 w-5 text-gray-400 group-hover:text-secondary-400 transition-colors" />
+              </div>
+              <div>
+                <span class="text-gray-300">El Tecal, Panamá Oeste</span>
+                <span class="text-xs text-gray-500 block">Arraiján</span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     
-    <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-6 text-center">
-      <p class="text-sm text-gray-500 dark:text-gray-400">© {new Date().getFullYear()} FUNDADER. Todos los derechos reservados.</p>
+    <!-- Sección inferior -->
+    <div class="container-responsive py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2 text-gray-400">
+          <span>© {new Date().getFullYear()} FUNDADER. Hecho con</span>
+          <HeartIcon class="h-4 w-4 text-red-500 animate-pulse" />
+          <span>en Panamá</span>
+        </div>
+        
+        <!-- Enlaces legales -->
+        <div class="flex items-center gap-6 text-sm">
+          <a href="/privacidad" class="text-gray-400 hover:text-white transition-colors">
+            Política de Privacidad
+          </a>
+          <a href="/terminos" class="text-gray-400 hover:text-white transition-colors">
+            Términos de Uso
+          </a>
+        </div>
+      </div>
     </div>
   </div>
+  
+  <!-- Botón de scroll to top -->
+  <button 
+    id="scroll-to-top"
+    class="fixed bottom-8 right-8 w-12 h-12 bg-secondary-600 hover:bg-secondary-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible hover:scale-110 z-50"
+    aria-label="Volver arriba"
+  >
+    <ArrowUpIcon class="h-5 w-5 mx-auto" />
+  </button>
 </footer>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // Funcionalidad de copiar email
     const email = document.getElementById('email-supp');
-    const original = email.textContent;
+    const original = email?.textContent;
 
     function copyEmail() {
-      // Intenta copiar al portapapeles
-      navigator.clipboard.writeText(email.textContent)
+      if (!email || !original) return;
+      
+      navigator.clipboard.writeText(original)
         .then(() => {
           email.textContent = "¡Email Copiado!";
           setTimeout(() => {
@@ -136,12 +238,34 @@ const { items: cursos } = await contentfulClient.getEntries<Cursos>({
           }, 1500);
         })
         .catch(() => {
-          // Fallback para navegadores que no soportan clipboard API
-          window.prompt("Copia el correo:", email.textContent);
+          window.prompt("Copia el correo:", original);
         });
     }
 
-    email.addEventListener('click', copyEmail);
-    email.addEventListener('touchend', copyEmail);
+    email?.addEventListener('click', copyEmail);
+    email?.addEventListener('touchend', copyEmail);
+
+    // Botón scroll to top
+    const scrollButton = document.getElementById('scroll-to-top');
+    
+    function toggleScrollButton() {
+      if (window.scrollY > 300) {
+        scrollButton?.classList.remove('opacity-0', 'invisible');
+        scrollButton?.classList.add('opacity-100', 'visible');
+      } else {
+        scrollButton?.classList.add('opacity-0', 'invisible');
+        scrollButton?.classList.remove('opacity-100', 'visible');
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    window.addEventListener('scroll', toggleScrollButton);
+    scrollButton?.addEventListener('click', scrollToTop);
   });
 </script>

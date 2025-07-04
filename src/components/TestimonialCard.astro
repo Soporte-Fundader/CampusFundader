@@ -3,6 +3,9 @@ import { contentfulClient } from "../lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { EntryFieldTypes } from "contentful";
 
+import QuoteIcon from "../Icons/QuoteIcon.astro";
+import Star from "../Icons/StarIcon.astro";
+
 interface Testimonios {
   contentTypeId: "testimonios";
   fields: {
@@ -19,22 +22,80 @@ const { items: testimonio } = await contentfulClient.getEntries<Testimonios>({
 });
 ---
 
-{testimonio.map((t) => (
-          <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6 border-t-4 border-secondary-500">
-            <div class="flex items-center mb-4">
-              <img src={t.fields.estudianteP.fields.file.url} alt={t.fields.estudianteN} class="w-12 h-12 rounded-full mr-4" />
-              <div>
-                <h4 class="font-semibold text-primary-600 dark:text-white">{t.fields.estudianteN}</h4>
-                <p class="text-sm text-gray-500 dark:text-gray-400">{t.fields.estudiantePC}</p>
-              </div>
-            </div>
-            <p class="text-gray-600 dark:text-gray-300 italic">"{t.fields.estudianteD}"</p>
-            <div class="mt-4 flex text-yellow-400">
-              {Array.from({ length: t.fields.estudianteRating }).map((_, index) => (
-                <svg key={index} xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              ))}
+{testimonio.map((t, index) => (
+  <div class="group animate-fade-in-up" style={`animation-delay: ${index * 0.2}s`}>
+    <div class="card h-full relative overflow-hidden hover-lift">
+      <!-- Elemento decorativo superior -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary-500 to-secondary-600"></div>
+      
+      <!-- Icono de comillas -->
+      <div class="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity">
+        <QuoteIcon class="h-12 w-12 text-secondary-500" />
+      </div>
+      
+      <div class="content-padding">
+        <!-- Header con foto y info del estudiante -->
+        <div class="flex items-center mb-6">
+          <div class="relative">
+            <img 
+              src={t.fields.estudianteP.fields.file.url} 
+              alt={t.fields.estudianteN} 
+              class="w-16 h-16 rounded-full object-cover ring-4 ring-white dark:ring-gray-700 shadow-lg"
+            />
+            <!-- Indicador de verificación -->
+            <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-800">
+              <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
             </div>
           </div>
-        ))}
+          
+          <div class="ml-4 flex-1">
+            <h4 class="font-bold text-lg text-gray-900 dark:text-white group-hover:text-secondary-600 dark:group-hover:text-secondary-400 transition-colors">
+              {t.fields.estudianteN}
+            </h4>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">
+              {t.fields.estudiantePC}
+            </p>
+          </div>
+        </div>
+        
+        <!-- Testimonio -->
+        <blockquote class="relative mb-6">
+          <p class="text-gray-700 dark:text-gray-300 italic text-lg leading-relaxed">
+            "{t.fields.estudianteD}"
+          </p>
+        </blockquote>
+        
+        <!-- Rating con estrellas mejoradas -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1">
+            {Array.from({ length: 5 }).map((_, starIndex) => (
+              <Star 
+                class={`h-5 w-5 transition-colors duration-200 ${
+                  starIndex < t.fields.estudianteRating 
+                    ? 'text-yellow-400 fill-current' 
+                    : 'text-gray-300 dark:text-gray-600'
+                }`}
+              />
+            ))}
+            <span class="ml-2 text-sm font-semibold text-gray-600 dark:text-gray-400">
+              {t.fields.estudianteRating}.0
+            </span>
+          </div>
+          
+          <!-- Badge de estudiante verificado -->
+          <div class="flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-xs font-medium">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            Estudiante Verificado
+          </div>
+        </div>
+      </div>
+      
+      <!-- Efecto de brillo en hover -->
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-secondary-500/5 to-transparent"></div>
+      </div>
+    </div>
+  </div>
+))}

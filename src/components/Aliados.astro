@@ -1,7 +1,11 @@
 ---
 import type { EntryFieldTypes } from "contentful";
 import { contentfulClient } from "../lib/contentful";
-import { ArrowBigLeftDash, ArrowBigRightDash, CirclePause, CirclePlay } from "lucide-astro";
+
+import ArrowBigLeftDashIcon from "../Icons/ArrowBigLeftDashIcon.astro";
+import ArrowBigRightDashIcon from "../Icons/ArrowBigRightDashIcon.astro"
+import CirclePauseIcon from "../Icons/CirclePauseIcon.astro";
+import CirclePlayIcon from "../Icons/CirclePlayIcon.astro";
 
 // Interfaz para los datos de Contentful
 interface Aliados {
@@ -20,14 +24,14 @@ const { items: sponsorEntries } = await contentfulClient.getEntries<Aliados>({
 const logosList = sponsorEntries[0]?.fields.logosA ?? [];
 ---
 
-<section class="py-16 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+<section class="py-16 bg-white dark:bg-gray-800">
   <div class="container mx-auto px-4">
     <!-- Header -->
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
         Nuestros Aliados Estratégicos
       </h2>
-      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+      <p class="text-lg text-gray-600 dark:text-gray-300 mx-auto">
         Colaboramos con las mejores organizaciones para ofrecer experiencias educativas de calidad mundial
       </p>
     </div>
@@ -49,7 +53,7 @@ const logosList = sponsorEntries[0]?.fields.logosA ?? [];
             class="flex-shrink-0 w-48 h-32 group cursor-pointer"
             data-partner-name={logo.fields.title}
           >
-            <div class="relative w-full h-full bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-105 border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="relative w-full h-full bg-white  rounded-xl shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-105 border border-gray-200 dark:border-gray-700 overflow-hidden">
               <!-- Hover Overlay -->
               <div class="absolute inset-0 bg-gradient-to-t from-primary-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               
@@ -81,7 +85,7 @@ const logosList = sponsorEntries[0]?.fields.logosA ?? [];
         class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 hover:scale-110"
         aria-label="Anterior"
       >
-        <ArrowBigLeftDash class="h-5 w-5" />
+        <ArrowBigLeftDashIcon class="h-5 w-5" />
       </button>
       
       <!-- Progress Indicators -->
@@ -100,7 +104,7 @@ const logosList = sponsorEntries[0]?.fields.logosA ?? [];
         class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 hover:scale-110"
         aria-label="Siguiente"
       >
-        <ArrowBigRightDash class="h-5 w-5" />
+        <ArrowBigRightDashIcon class="h-5 w-5" />
       </button>
     </div>
 
@@ -111,8 +115,8 @@ const logosList = sponsorEntries[0]?.fields.logosA ?? [];
         class="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300"
         aria-label="Pausar autoplay"
       >
-        <CirclePause class="h-4 w-4" id="pause-icon" />
-        <CirclePlay class="h-4 w-4 hidden" id="play-icon" />
+        <CirclePauseIcon class="h-4 w-4" id="pause-icon" />
+        <CirclePlayIcon class="h-4 w-4 hidden" id="play-icon" />
         <span id="play-pause-text">Pausar</span>
       </button>
     </div>

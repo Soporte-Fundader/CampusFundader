@@ -1,21 +1,100 @@
 ---
+
+
+import ArrowRight from '../Icons/ArrowRightIcon.astro';
+import Play from '../Icons/PlayIcon.astro';
+import Sparkles from '../Icons/SparklesIcon.astro';
 ---
 
-
-<section class="relative bg-gradient-to-r from-primary-700 to-primary-900 text-white py-16 md:py-24">
-    <div class="absolute inset-0 opacity-20 bg-[url('/images/pattern.svg')] bg-repeat"></div>
-    <div class="container mx-auto px-4 relative z-10">
-      <div class="max-w-3xl">
-        <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-4">Tu camino hacia el aprendizaje y desarrollo personal</h1>
-        <p class="text-lg md:text-xl opacity-90 mb-8">Explora nuestros cursos diseñados para potenciar tus habilidades y conocimientos en diferentes áreas.</p>
-        <div class="flex flex-wrap gap-4">
-          <a href="/programas" class="inline-block bg-secondary-500 hover:bg-secondary-600 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-lg hover:shadow-xl">
-            Explorar Programas
-          </a>
-          <a href="/cursos" class="inline-block bg-white hover:bg-gray-100 text-primary-700 font-medium py-3 px-6 rounded-lg transition-colors shadow-lg hover:shadow-xl">
-            Ver Todos los Cursos
-          </a>
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Fondo con gradiente mejorado -->
+  <div class="absolute inset-0 gradient-hero"></div>
+  
+  <!-- Patrón de fondo animado -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-float"></div>
+  </div>
+  
+  <!-- Elementos decorativos flotantes -->
+  <div class="absolute top-20 left-10 w-20 h-20 bg-secondary-500/20 rounded-full blur-xl animate-float" style="animation-delay: 0s;"></div>
+  <div class="absolute top-40 right-20 w-32 h-32 bg-primary-400/20 rounded-full blur-xl animate-float" style="animation-delay: 1s;"></div>
+  <div class="absolute bottom-20 left-20 w-24 h-24 bg-secondary-400/20 rounded-full blur-xl animate-float" style="animation-delay: 2s;"></div>
+  
+  <div class="container mx-auto px-4 relative z-10 text-center py-20">
+    <div class="max-w-6xl mx-auto">
+      <!-- Badge superior -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white/90 text-sm font-medium mb-8 animate-fade-in-scale">
+        <Sparkles class="h-4 w-4 text-secondary-400" />
+        <span>Transformando vidas a través de la educación</span>
+      </div>
+      
+      <!-- Título principal con animación -->
+      <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up" style="animation-delay: 0.2s;">
+        Tu camino hacia el 
+        <span class="relative block md:inline">
+          <span class="bg-gradient-to-r from-secondary-400 to-secondary-600 bg-clip-text text-transparent">
+            aprendizaje
+          </span>
+          <div class="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-secondary-400 to-secondary-600 rounded-full transform scale-x-0 animate-[scaleX_0.8s_ease-out_0.8s_forwards]"></div>
+        </span>
+        <span class="block">y desarrollo personal</span>
+      </h1>
+      
+      <!-- Subtítulo -->
+      <p class="text-lg md:text-xl lg:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up" style="animation-delay: 0.4s;">
+        Explora nuestros cursos diseñados para potenciar tus habilidades y conocimientos en diferentes áreas, 
+        con metodologías innovadoras y contenido de calidad mundial.
+      </p>
+      
+      <!-- Botones de acción mejorados -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 animate-fade-in-up" style="animation-delay: 0.6s;">
+        <a 
+          href="/programas" 
+          class="group inline-flex items-center gap-3 px-8 py-4 bg-secondary-600 hover:bg-secondary-700 text-white font-semibold rounded-2xl transition-all duration-300 shadow-2xl hover:shadow-secondary-500/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 focus:ring-offset-transparent"
+        >
+          <span>Explorar Programas</span>
+          <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
+        </a>
+        
+        <a 
+          href="/cursos" 
+          class="group inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/30 text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+        >
+          <Play class="h-5 w-5 transition-transform group-hover:scale-110" />
+          <span>Ver Todos los Cursos</span>
+        </a>
+      </div>
+      
+      <!-- Estadísticas -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 animate-fade-in-up" style="animation-delay: 0.8s;">
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">2000+</div>
+          <div class="text-white/80 text-sm md:text-base uppercase tracking-wider">Estudiantes Activos</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">100+</div>
+          <div class="text-white/80 text-sm md:text-base uppercase tracking-wider">Cursos Disponibles</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">95%</div>
+          <div class="text-white/80 text-sm md:text-base uppercase tracking-wider">Satisfacción</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+  
+  <!-- Indicador de scroll -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+      <div class="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes scaleX {
+    to {
+      transform: scaleX(1);
+    }
+  }
+</style>

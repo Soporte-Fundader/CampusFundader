@@ -1,5 +1,6 @@
 ---
-import {ChevronRight} from 'lucide-astro';
+
+import ChevronRightIcon from '../Icons/ChevronRightIcon.astro';
 
 import { contentfulClient } from "../lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
@@ -60,7 +61,7 @@ const { items: entries } = await contentfulClient.getEntries<Programa>({
                     </span>
                     <span class="text-secondary-500 dark:text-secondary-400 font-medium group-hover:translate-x-1 transition-transform inline-flex items-center">
                       Ver programa
-                      <ChevronRight class="size-5 text-secondary-500 dark:text-secondary-400 mr-2" />
+                      <ChevronRightIcon class="size-5 text-secondary-500 dark:text-secondary-400 mr-2" />
                     </span>
                   </div>
                 </div>
