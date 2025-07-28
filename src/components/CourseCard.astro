@@ -89,7 +89,7 @@ const { items: cursos } = await contentfulClient.getEntries<Cursos>({
           <div class="flex items-center gap-4">
             <div class="flex items-center gap-1">
               <ClockIcon class="h-4 w-4" />
-              <span>{c.fields.detallesC.fields.duracionP}</span>
+              <span>{c.fields.detallesC?.fields?.duracionP}</span>
             </div>
          
           </div>

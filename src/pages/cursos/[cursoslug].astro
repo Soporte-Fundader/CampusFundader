@@ -87,19 +87,16 @@ if (!items.length) throw new AstroError("Programa no encontrado");
 const curso = items[0].fields;
 ---
 
-<Layout title={curso.cursosT}>
-
-
-
- <section class="relative">
+<Layout title={curso.cursosT || 'Sin título'}>
+  <section class="relative">
     <div class="h-64 sm:h-100 md:h-110 lg:h-120 xl:h-140 overflow-hidden">
-      <img src={curso.cursoI.fields.file.url} alt={curso.cursoI.fields.title} class="w-full h-full object-cover" />
+      <img src={curso.cursoI?.fields?.file?.url || '/hubcursos/images/placeholder.png'} alt={curso.cursoI?.fields?.title || ''} class="w-full h-full object-cover" />
       <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/50"></div>
     </div>
     <div class="absolute bottom-0 left-0 right-0 p-8">
       <div class="container mx-auto">
-        <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">{curso.cursosT}</h1>
-        <p class="text-md md:text-xl text-gray-200">{curso.cursosD}</p>
+        <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">{curso.cursosT || ''}</h1>
+        <p class="text-md md:text-xl text-gray-200">{curso.cursosD || ''}</p>
       </div>
     </div>
   </section>
@@ -112,34 +109,38 @@ const curso = items[0].fields;
         <div class="lg:col-span-2">
           <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6 mb-8">
             <h2 class="text-2xl font-bold text-primary-600 dark:text-white mb-4">Objetivos del Programa</h2>
-           <!-- Objetivos del Programa -->
-            <ul class="space-y-3">
+            {curso.objetivesC?.length > 0 ? (
+              <ul class="space-y-3">
                 {curso.objetivesC.map(obj => (
-                 <li class="flex items-start">
-                   <CheckIcon class="size-5 text-secondary-500 mr-2" />
-
-                  <p class="text-gray-700 dark:text-gray-300 font-bold">{obj.fields.verb}</p>
-                  <p class="text-gray-700 dark:text-gray-300">{obj.fields.contet}</p>
-                 </li>
-             ))}
-            </ul>
-
+                  <li class="flex items-start">
+                    <CheckIcon class="size-5 text-secondary-500 mr-2" />
+                   
+                    <p class="text-gray-700 dark:text-gray-300">{obj.fields?.contet || ''}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-gray-500">No hay objetivos disponibles.</p>
+            )}
           </div>
 
           <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6 mb-8">
             <h2 class="text-2xl font-bold text-primary-600 dark:text-white mb-8">Cursos del Programa</h2>
-            <div class="grid grid-cols-1 ">
-              {curso.modulosC.map(course => (
-                <div class="flex items-center mb-2">
-                    <BookOpenCheckIcon class="size-5 text-secondary-500 mr-2" />
-                    <h3 class="text-xl font-bold text-primary-600 dark:text-white"> {course.fields.nmodulos}</h3>
-                </div>
-                
-                    <p class="text-gray-600 dark:text-gray-400 mb-10">{course.fields.dmodulos}</p>
-                
-
-              ))}
-            </div>
+            {curso.modulosC?.length > 0 ? (
+              <div class="grid grid-cols-1 ">
+                {curso.modulosC.map(course => (
+                  <div>
+                    <div class="flex items-center mb-2">
+                      <BookOpenCheckIcon class="size-5 text-secondary-500 mr-2" />
+                      <h3 class="text-xl font-bold text-primary-600 dark:text-white">{course.fields?.nmodulos || ''}</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mb-10">{course.fields?.dmodulos || ''}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="text-gray-500">No hay cursos disponibles.</p>
+            )}
           </div>
         </div>
 
@@ -149,113 +150,97 @@ const curso = items[0].fields;
           <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6">
             <h2 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Información general</h2>
             <div class="space-y-6">
-              
-                <div class="">
-                    <h4 class=" text-lg font-medium text-gray-700 dark:text-gray-300 mb-4"> Auspiciado por: </h4>
-                   
-                    <div class="flex items-center justify-center space-x-4 mb-4 h-32">
-                    {curso.detallesC.fields.logoP.map((logo)=>(
-                        <img class="rounded-xl w-50 h-full object-cover"  src={logo.fields.file.url} alt={logo.fields.title} />
+              <div>
+                <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-4">Auspiciado por:</h4>
+                {curso.detallesC?.fields?.logoP?.length > 0 ? (
+                  <div class="flex items-center justify-center space-x-4 mb-4 h-32">
+                    {curso.detallesC.fields.logoP.map((logo) => (
+                      <img class="rounded-xl w-50 h-full object-cover" src={logo.fields?.file?.url || '/hubcursos/images/placeholder.png'} alt={logo.fields?.title || ''} />
                     ))}
-                      
-                     
-                   
-                      
-                    </div>
+                  </div>
+                ) : (
+                  <p class="text-gray-500">Sin auspiciadores.</p>
+                )}
+              </div>
+              <div>
+                <div class="flex items-center mb-2">
+                  <ClockIcon class="size-4 text-secondary-500 mr-2" />
+                  <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300">Duración:</h4>
                 </div>
-                
-            <div >
-                    <div class="flex items-center mb-2">
-                      <ClockIcon class="size-4 text-secondary-500 mr-2" />
-                      <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300">Duración:</h4>
-                    </div>
-                  <p class="text-gray-600 dark:text-gray-400">{curso.detallesC.fields.duracionP}</p>
-             </div>
-
+                <p class="text-gray-600 dark:text-gray-400">{curso.detallesC?.fields?.duracionP || ''}</p>
+              </div>
+              
               <div>
                 <div class="flex items-center mb-2">
                   <CalendarIcon class="size-4 text-secondary-500 mr-2" />
-                <h4 class=" text-lg font-medium text-gray-700 dark:text-gray-300">Horario:</h4>
+                  <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300">Horario:</h4>
                 </div>
                 <div class="flex gap-x-2">
-                  
-                  {curso.detallesC.fields.horarioP.map((list, idx, arr) => (
-                    <>
-                      <span class="text-gray-600 dark:text-gray-400">{list}</span>
-                      {idx < arr.length - 1 && (
-                        <span class="text-gray-600 dark:text-gray-400">|</span>
-                      )}
-                    </>
-                  ))}
+                  {Array.isArray(curso.detallesC?.fields?.horarioP) && curso.detallesC?.fields?.horarioP.length > 0 ? (
+                    curso.detallesC.fields.horarioP.map((list, idx, arr) => (
+                      <>
+                        <span class="text-gray-600 dark:text-gray-400">{list}</span>
+                        {idx < arr.length - 1 && (
+                          <span class="text-gray-600 dark:text-gray-400">|</span>
+                        )}
+                      </>
+                    ))
+                  ) : (
+                    <span class="text-gray-500">No especificado</span>
+                  )}
                 </div>
-                
-                
               </div>
 
               <div>
                 <div class="flex items-center mb-2">
                   <LaptopMinimalIcon class="size-4 text-secondary-500 mr-2" />
-                <h4 class=" text-lg font-medium text-gray-700 dark:text-gray-300">Modalidad:</h4>
+                  <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300">Modalidad:</h4>
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 capitalize">{curso.detallesC.fields.modalidadP}</p>
+                <p class="text-gray-600 dark:text-gray-400 capitalize">{curso.detallesC?.fields?.modalidadP || ''}</p>
               </div>
-
-              
             </div>
           </div>
 
           <!-- Coordinator Card -->
           <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6">
-            <h3 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Especialistas </h3>
-            {curso.profesoresC.map(prof => (
-      <div class="flex items-center mb-8">
-
-        <img src={prof.fields.perfilP.fields.file.url} alt={prof.fields.nombreP} class="w-16 h-16 rounded-full object-cover mr-4" />
-        <div>
-          <h4 class="font-medium text-gray-700 dark:text-gray-300">{prof.fields.nombreP}</h4>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">{prof.fields.cvP}</p>
-        </div>
-      </div>
-    ))}
+            <h3 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Especialistas</h3>
+            {curso.profesoresC?.length > 0 ? (
+              curso.profesoresC.map(prof => (
+                <div class="flex items-center mb-8">
+                  {prof.field?.perfilP?.fields?.file?.url && (
+                    <img
+                      src={prof.fields.perfilP.fields.file.url}
+                      alt={prof.fields?.nombreP || 'Sin nombre'}
+                      class="w-16 h-16 rounded-full object-cover mr-4"
+                    />
+                  )}
+                  <div>
+                    <h4 class="font-medium text-gray-700 dark:text-gray-300">{prof.fields?.nombreP || ''}</h4>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">{prof.fields?.cvP || ''}</p>
+                  </div> 
+                </div>
+              ))
+            ) : (
+              <p class="text-gray-500">No hay especialistas disponibles.</p>
+            )}
           </div>
 
-           <!-- Información Card -->
+          <!-- Información Card -->
           <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6">
-            <h3 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Solicita información </h3>
-           
-      <div class="flex items-center mb-8">     
-        
-          <SendIcon class="size-4 text-secondary-500 mr-2 " />
-          <p class="text-gray-600 dark:text-gray-400 text-sm mr-2">email:</p>
-          <p id="email-fundader" class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer mr-1 hover:text-secondary-500">{curso.detallesC.fields.emailS}</p>
-          <CopyIcon class="size-4 text-gray-500 " />
-          
-
-        </div>
-      </div>
-    
+            <h3 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Solicita información</h3>
+            <div class="flex items-center mb-8">
+              <SendIcon class="size-4 text-secondary-500 mr-2" />
+              <p class="text-gray-600 dark:text-gray-400 text-sm mr-2">email:</p>
+              <p id="email-fundader" class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer mr-1 hover:text-secondary-500">
+                {curso.detallesC?.fields?.emailS || ''}
+              </p>
+              <CopyIcon class="size-4 text-gray-500" />
+            </div>
           </div>
-
-
-          <!-- Benefits Card -->
-          <!-- <div class="bg-white dark:bg-primary-800 rounded-xl shadow-md p-6">
-            <h3 class="text-xl font-bold text-primary-600 dark:text-white mb-4">Beneficios</h3>
-            <ul class="space-y-3">
-              {programa.profesores.map(benefit => (
-                <li class="flex items-start">
-                  <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span class="text-gray-600 dark:text-gray-400">{benefit}</span>
-                </li>
-              ))}
-            </ul>
-          </div> -->
         </div>
       </div>
     </div>
   </section>
-
 </Layout>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
