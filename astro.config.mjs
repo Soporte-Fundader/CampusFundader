@@ -11,6 +11,5 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   site: 'https://fundader.org',
-  base: '/hubcursos',
   trailingSlash: 'always',
 });
